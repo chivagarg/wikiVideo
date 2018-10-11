@@ -12,6 +12,16 @@ chrome.storage.sync.get('color', function(data) {
 });
 
 changeColor.onclick = function(element) {
+  // try to read the title
+  let videoTitle = document.getElementById('videoTitle');
+
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+  	// Update with the current title.
+  	// Todo(shiva): This needs to be more robust otherwise an arch change 
+  	// by wiki will hose everything/
+  	videoTitle.innerHTML = tabs[0].title;
+  });
+
   let color = element.target.value;
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.executeScript(
